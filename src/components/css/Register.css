@@ -1,0 +1,25 @@
+.container-register {
+    text-align: center;
+    align-items: center;
+    max-height: max-content;
+
+}
+
+body{
+    background-color: rgb(241, 237, 231)!important;
+}
+
+.btn-register {
+   width: 100px; 
+}
+
+.title{
+    margin-left: 40%;
+    margin-bottom: 20px;
+
+}
+
+.loginLink{
+    margin-left: 50%;
+}
+

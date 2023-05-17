@@ -1,0 +1,11 @@
+.users-list{
+  margin: 2em;
+  align-items: center;
+  text-align: center;
+}
+
+.profile{
+  align-items: center;
+  width: 100%;
+  height: 10%;
+}
