@@ -4,19 +4,17 @@ import { getUserProfile } from "./js/Api";
 import { updateProfile, validateData } from "./js/User";
 
 const Profile = () => {
-  
   const id = localStorage.getItem("userIdUpdate");
   const token = localStorage.getItem("token");
 
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState(null);
 
-  const [name, setName] = useState(userData.name);
-  const [email, setEmail] = useState(userData.email);
-  const [age, setAge] = useState(userData.age);
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [age, setAge] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [image, setImage] = useState(
-    userData.img
-      ? userData.img
-      : "https://e7.pngegg.com/pngimages/323/705/png-clipart-user-profile-get-em-cardiovascular-disease-zingah-avatar-miscellaneous-white.png"
+    "https://e7.pngegg.com/pngimages/323/705/png-clipart-user-profile-get-em-cardiovascular-disease-zingah-avatar-miscellaneous-white.png"
   );
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -24,22 +22,27 @@ const Profile = () => {
   const fetchData = async () => {
     const profileData = await getUserProfile(token, id, "update");
     setUserData(profileData);
+    setName(profileData.name);
+    setEmail(profileData.email);
+    setAge(profileData.age);
+    setImage(
+      profileData.img
+        ? profileData.img
+        : "https://e7.pngegg.com/pngimages/323/705/png-clipart-user-profile-get-em-cardiovascular-disease-zingah-avatar-miscellaneous-white.png"
+    );
   };
-
-  const handleUpdateProfile = async (event) => {
-    event.preventDefault();
-
+  const handleUpdateProfile = async () => {
     const validationResult = validateData({ name, email, age });
     if (validationResult.isValid) {
       const response = await updateProfile(
-        { name, email, age, image },
+        { name, email, age, image: selectedImage },
         id,
         token
       );
       if (response && response.status === 200) {
         setSuccessMessage(response.data.message);
         fetchData();
-  
+
         setTimeout(() => {
           setSuccessMessage(null);
         }, 2000);
@@ -57,16 +60,15 @@ const Profile = () => {
     }
   };
 
-  const handleImageChange = async (event) => {
+  const handleImageChange = (event) => {
     const file = event.target.files[0];
-  
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        setImage(reader.result);
-      };
-    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setSelectedImage(reader.result);
+      setImage(reader.result);
+    };
+    reader.readAsDataURL(file);
   };
 
   useEffect(() => {
@@ -80,90 +82,78 @@ const Profile = () => {
           src="https://www.arcetec.com.co/wp-content/uploads/2022/05/Logo_Original.svg"
           className="attachment-large size-large wp-image-6923"
           alt=""
-          width={250}
+          width={350}
         />
       </div>
       {userData && (
         <div className="container-profile">
-          <form onSubmit={handleUpdateProfile} encType="multipart/form-data">
-            {successMessage && (
-              <div className="alert alert-success" role="alert">
-                {successMessage}
-              </div>
-            )}
-            {errorMessage && (
-              <div className="alert alert-danger" role="alert">
-                {errorMessage}
-              </div>
-            )}
-            <div className="user-img">
-              <label htmlFor="upload-image">
-                <img width={150} src={image} alt="" />
-              </label>
-              <input
-                type="file"
-                id="upload-image"
-                style={{ display: "none" }}
-                onChange={handleImageChange}
-              />
+          {successMessage && (
+            <div className="alert alert-success" role="alert">
+              {successMessage}
             </div>
-            <div className="mb-3 row">
-              <label htmlFor="staticEmail" className="col-md-3 col-form-label">
-                Nombre
-              </label>
-              <div className="col-sm-8">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="staticEmail"
-                  onChange={(e) => setName(e.target.value)}
-                  defaultValue={userData.name}
-                  required
-                />
-              </div>
+          )}
+          {errorMessage && (
+            <div className="alert alert-danger" role="alert">
+              {errorMessage}
             </div>
-            <div className="mb-3 row">
-              <label
-                htmlFor="inputPassword"
-                className="col-md-3 col-form-label"
-              >
-                Email
-              </label>
-              <div className="col-sm-8">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="inputPassword"
-                  onChange={(e) => setEmail(e.target.value)}
-                  defaultValue={userData.email}
-                />
-              </div>
-            </div>
-            <div className="mb-3 row">
-              <label
-                htmlFor="inputPassword"
-                className="col-sm-3 col-form-label"
-              >
-                Edad
-              </label>
-              <div className="col-sm-8">
-                <input
-                  type="text"
-                  className="form-control"
-                  onChange={(e) => setAge(e.target.value)}
-                  defaultValue={userData.age}
-                />
-              </div>
-            </div>
-              <button className="btn btn-primary btn-update" type="submit">
-                Actualizar
-              </button>
-              </form>
-              <a href="/home" type="button" className="col">
-                <button className="btn btn-danger btn-back">Atras</button>
-              </a>
-            </div>
-          
+          )}
+          <div className="user-img from-group">
+            <label htmlFor="upload-image">
+              <img width={150} src={image} alt="" />
+            </label>
+            <input
+              type="file"
+              id="upload-image"
+              style={{ display: "none" }}
+              onChange={handleImageChange}
+            />
+          </div>
+          <div className="from-group">
+            <label htmlFor="staticEmail" className="col-md-3 col-form-label">
+              Nombre
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="name"
+              onChange={(e) => setName(e.target.value)}
+              defaultValue={name}
+              required
+            />
+          </div>
+          <div className="from-group">
+            <label htmlFor="inputEmail">Email</label>
+            <input
+              type="text"
+              className="form-control"
+              id="inputEmail"
+              onChange={(e) => setEmail(e.target.value)}
+              defaultValue={email}
+            />
+          </div>
+          <div className="from-group">
+            <label htmlFor="inputAge">Edad</label>
+            <input
+              type="text"
+              className="form-control"
+              onChange={(e) => setAge(e.target.value)}
+              defaultValue={age}
+            />
+          </div>
+          <div className="row justify-content-evenly mt-3">
+            <button
+              onClick={() => handleUpdateProfile()}
+              className="btn btn-outline-primary col-4"
+              type="submit"
+            >
+              Actualizar
+            </button>
+
+            <a href="/home" type="button" className="col-4">
+              <button className="btn btn-outline-danger btn-back">Atras</button>
+            </a>
+          </div>
+        </div>
       )}
     </div>
   );

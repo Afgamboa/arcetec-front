@@ -33,9 +33,9 @@ const Login = () => {
     }
 
     const res = await login(email, password);
-    if (res.status === 200) {
-      history("/home");
-    }else {
+    if (res && res.status === 200) {
+      window.location.href = "/home";
+    } else {
       setError(res);
       setTimeout(() => {
         setError(null);
@@ -45,13 +45,18 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <img src="https://www.arcetec.com.co/wp-content/uploads/2022/05/Logo_Original.svg" className="attachment-large size-large wp-image-6923" alt=""  width={300}/>
+      <img
+        src="https://www.arcetec.com.co/wp-content/uploads/2022/05/Logo_Original.svg"
+        className="attachment-large size-large wp-image-6923 logo"
+        alt=""
+        width={300}
+      />
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="email">Correo electrónico</label>
+          <label htmlFor="email" className="text-muted mb-2">Correo electrónico</label>
           <input
             type="email"
-            className={`form-control ${errors.email ? "is-invalid" : ""}`}
+            className={`mb-3 form-control ${errors.email ? "is-invalid" : ""}`}
             id="email"
             value={email}
             onChange={handleEmailChange}
@@ -62,7 +67,7 @@ const Login = () => {
           )}
         </div>
         <div className="form-group">
-          <label htmlFor="password">Contraseña</label>
+          <label htmlFor="password"  className="text-muted mb-2">Contraseña</label>
           <input
             type="password"
             className={`form-control ${errors.password ? "is-invalid" : ""}`}
@@ -78,7 +83,7 @@ const Login = () => {
         {errors.submit && (
           <div className="alert alert-danger mt-3">{errors.submit}</div>
         )}
-        <button type="submit" className="btn btn-primary login mt-3">
+        <button type="submit" className="btn btn-primary login mt-2">
           Iniciar sesión
         </button>
         {error && (
@@ -87,10 +92,10 @@ const Login = () => {
           </div>
         )}
       </form>
-      <p className="mt-3">¿Aún no estás registrado?</p>
+      <p className="mt-3 mb-1 text-muted">¿Aún no estás registrado?</p>
       <button
         type="button"
-        className="btn btn-secondary"
+        className="btn btn-link btn-light"
         onClick={() => history("/register")}
       >
         Registrarse

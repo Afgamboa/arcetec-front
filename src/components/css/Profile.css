@@ -2,6 +2,9 @@
     max-height: max-content;
     align-items: center;
     text-align: center;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 20px;
+
 }
 
 body{
@@ -9,17 +12,30 @@ body{
 }
 
 .title{
-    margin-top: 30px;
-    margin-bottom: 50px;
+    margin-top: 20px;
+    margin-bottom: 40px;
     margin-left: auto;
 }
 .user-img{
-    margin-bottom: 1em;
+    margin-bottom: 5px;
 }
 
 .container-profile{
     margin-top: 40px;
     margin: auto;
-    width: 70%;
+    width: 20%;
 
+}
+
+.container-profile input {
+    border: none !important;
+    border-bottom: 1px solid #dbd4d4 !important;
+    background-color: transparent !important;
+    text-align: center;
+    outline: none;
+  }
+
+.profile{
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 25px;
 }

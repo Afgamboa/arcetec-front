@@ -22,7 +22,7 @@ const Home = () => {
   }, [token]);
 
   const hadleDetails = async (userId) => {
-    const response = await getUserProfile(token, userId, "details");
+    await getUserProfile(token, userId, "details");
   };
 
   const handleLogout = () => {
@@ -54,18 +54,18 @@ const Home = () => {
 
   return (
     <div className="users-list container">
-      <div className="row">
+      <div className="row justify-content-evenly homeNav mb-5">
         <div className="col-md-9">
           <img
             src="https://www.arcetec.com.co/wp-content/uploads/2022/05/Logo_Original.svg"
             className=""
             alt=""
-            width={300}
+            width={400}
           />
         </div>
         <div className="col-md-2">
           <button
-            className="btn btn-danger btn-sm"
+            className="btn btn-outline-danger btn-sm"
             onClick={() => handleLogout()}
           >
             Cerrar sesión
@@ -75,7 +75,7 @@ const Home = () => {
         <div className="col-md-1">
 
           <button
-            className="btn btn-secondary btn-sm"
+            className="btn btn-outline-secondary btn-sm"
             onClick={() => history('/register')}
           >
             Registrar

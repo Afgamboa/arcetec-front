@@ -76,16 +76,16 @@ const Register = () => {
 
   return (
     <div className="container-register">
-      <div className="d-flex title flex-row align-items-md-center">
+      <div className="title">
         <img
           src="https://www.arcetec.com.co/wp-content/uploads/2022/05/Logo_Original.svg"
-          className="attachment-large size-large wp-image-6923"
+          className="attachment-large logoRegister size-large wp-image-6923"
           alt=""
-          width={300}
+          width={350}
         />
-        <a href="/" className="loginLink">
+        <button className="btn btn-link  login-link btn-light" onClick={() => history('/')}>
           Login
-        </a>
+        </button>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -146,12 +146,12 @@ const Register = () => {
             <div className="invalid-feedback">{errors.name}</div>
           )}
         </div>
-        <div className="d-flex">
-          <button type="submit" className="btn btn-primary btn-register">
+        <div className="row justify-content-evenly mt-3">
+          <button type="submit" className="btn col-7 btn-outline-primary btn-register">
             Registrarse
           </button>
           <button
-            className="btn btn-secondary"
+            className="btn btn-outline-secondary col-4"
             onClick={() => window.history.back()}
           >
             Atras

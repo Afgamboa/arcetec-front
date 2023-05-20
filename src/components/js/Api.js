@@ -46,7 +46,7 @@ const showUserAlert = (profile) => {
     <div class="profile">
     <div class="card">
     <img  width={100} src="${
-      profile.imgUrl ||
+      profile.img ||
       "https://e7.pngegg.com/pngimages/323/705/png-clipart-user-profile-get-em-cardiovascular-disease-zingah-avatar-miscellaneous-white.png"
     }" />
     <div class="card-body">
@@ -62,8 +62,8 @@ const showUserAlert = (profile) => {
     cancelButtonText: "Eliminar",
     buttonsStyling: false,
     customClass: {
-      confirmButton: "btn btn-warning btn-sm mx-2",
-      cancelButton: "btn btn-secondary btn-sm mx-2",
+      confirmButton: "btn btn-outline-success btn-lg mx-2",
+      cancelButton: "btn btn-outline-danger btn-lg mx-2",
     },
   }).then((result) => {
     if (result.isConfirmed) {

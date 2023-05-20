@@ -9,3 +9,17 @@
   width: 100%;
   height: 10%;
 }
+
+.homeNav{
+  align-items: center;
+
+}
+
+.homeNav button{
+  font-size: large;
+}
+
+table{
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 20px;
+}

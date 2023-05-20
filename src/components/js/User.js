@@ -18,8 +18,7 @@ export const login = async (email, password) => {
     }
     return response;
   } catch (error) {
-    console.log("first", error);
-    return error.response.data.error;
+    return error.response.data.message;
   }
 };
 
@@ -51,41 +50,45 @@ export const validateData = (data) => {
   var errors = "";
 
   if (data.email && !emailRegex.test(data.email)) {
-    return errors = "El correo electrónico no es válido";
+    return (errors = "El correo electrónico no es válido");
   }
 
   if (data.password && !passwordRegex.test(data.password)) {
-    return errors =
-      "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número";
+    return (errors =
+      "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número");
   }
 
-  if ( data.age && !(!isNaN(parseFloat(data.age)) && isFinite(data.age))) {
-    return errors = "La edad debe ser un número";
+  if (data.age && !(!isNaN(parseFloat(data.age)) && isFinite(data.age))) {
+    return (errors = "La edad debe ser un número");
   }
 
   if (data.name && !nameRegex.test(data.name)) {
-    return errors = "El nombre no es válido";
+    return (errors = "El nombre no es válido");
   }
 
   return { isValid: true, errors: "" };
 };
 
-export const updateProfile = async ({ name, email, age, img }, userId, token) => {
-
+export const updateProfile = async (
+  { name, email, age, image },
+  userId,
+  token
+) => {
   try {
     const response = await axios.put(
       `http://localhost:8000/api/users/update/${userId}`,
-      { name, email, age, img },
+      { name, email, age, image },
       {
         headers: {
           Authorization: "Bearer " + token,
           "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json"
         },
       }
     );
     return response;
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return error.response.data.message;
   }
 };
@@ -104,7 +107,7 @@ export const deleteUser = async (userId, email, token) => {
         }
       );
 
-      if(response.status === 200) {
+      if (response.status === 200) {
         Swal.fire(response.data.message);
         setTimeout(() => {
           window.location.href = "/home";
@@ -119,14 +122,14 @@ export const deleteUser = async (userId, email, token) => {
 function showAlert(email) {
   return new Promise((resolve) => {
     Swal.fire({
-      title: "Estas por eliminar ha: ",
+      title: "Vas a eliminar a: ",
       html: `<h4 class="text-bg-secondary">${email} </h4>`,
       width: 300,
       confirmButtonText: "Eliminar",
-    buttonsStyling: false,
+      buttonsStyling: false,
 
       customClass: {
-        confirmButton: "btn btn-danger btn-sm mx-2",
+        confirmButton: "btn btn-outline-danger btn-lg mx-2",
       },
     }).then((result) => {
       if (result.isConfirmed) {
